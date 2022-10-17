@@ -1,15 +1,15 @@
 'use strict'
 
-import admin from './firebase_admin.js';
-import { waterfall } from 'async';
-import { get } from 'axios';
+const admin = require('./firebase_admin.js');
+const Async = require('async');
+const axios = require('axios');
 
 
 const naverRequestMeUrl = 'https://openapi.naver.com/v1/nid/me'
 
 function requestMe(naverAccessToken,callback) {
   console.log('Requesting user profile from Naver API server. '+ naverAccessToken)
-  return get(naverRequestMeUrl,{
+  return axios.get(naverRequestMeUrl,{
     method: 'GET',
     headers: {'Authorization': 'Bearer ' + naverAccessToken}
   }).then((result)=>{
@@ -47,7 +47,7 @@ function updateOrCreateUser(userId, email, displayName, photoURL) {
 
 function createFirebaseToken(naverAccessToken,callback) {
 
-  waterfall([
+  Async.waterfall([
     (next)=>{
       requestMe(naverAccessToken,(error,response,boy)=>{
         console.log(response)
@@ -106,4 +106,6 @@ function createFirebaseToken(naverAccessToken,callback) {
 
 }
 
-export default createFirebaseToken
+module.exports={
+  createFirebaseToken
+}
