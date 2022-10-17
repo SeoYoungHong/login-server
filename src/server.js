@@ -1,16 +1,16 @@
 // server.js
 // where your node app starts
-import configure from './src/aws-exports'
-import {AWS} from 'aws-sdk'
+
 const express = require("express");
 const AppleAuth = require("apple-auth");
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const naver_auth = require('./naver_auth.js');
 
-AWS.configure(configure)
-
 const app = express();
+import configure from './src/aws-exports'
+import {AWS} from 'aws-sdk'
+AWS.configure(configure)
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
