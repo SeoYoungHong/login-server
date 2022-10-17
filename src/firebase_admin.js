@@ -1,10 +1,10 @@
-var admin = require("firebase-admin");
+import admin, { initializeApp, credential as _credential } from "firebase-admin";
 
-var serviceAccount = require("./serviceAccountKey.json");
+import serviceAccount from "./severAccountKey.json";
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+initializeApp({
+  credential: _credential.cert(serviceAccount),
   databaseURL: "https://testapp-760da-default-rtdb.firebaseio.com"
 });
 
-module.exports=admin;
+export default admin;
